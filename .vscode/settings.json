@@ -1,0 +1,17 @@
+{
+    "files.associations": {
+        "json.h": "c",
+        "cxml.h": "c",
+        "random.h": "c",
+        "dataqueue.h": "c",
+        "memfunc.h": "c",
+        "list.h": "c",
+        "atomic.h": "c",
+        "ipc.h": "c",
+        "string.h": "c",
+        "assert.h": "c",
+        "errno.h": "c",
+        "stdlib.h": "c"
+    },
+    "C_Cpp.errorSquiggles": "Enabled"
+}
