@@ -1,13 +1,64 @@
 #include <sys/types.h>
 #include <sys/socket.h>
+#include <sys/select.h>
+#include <bits/time.h>
 #include <stdio.h>
 #include <unistd.h>
 #include <string.h>
 #include <arpa/inet.h>
 #include "../defs.h"
+#include "../../components/source/utils/json.c"
+
+int processor(SOCKET _cSock)
+{
+    char szRecv[1024] = {};
+    int nLen = recv(_cSock, (char*)szRecv, sizeof(DataHeader), 0);
+    DataHeader* header = (DataHeader*)szRecv;
+    if(nLen <= 0)
+    {
+        printf("client <socket = %ld> exited. task finish. \n", _cSock);
+        return -1;
+    }
+    switch(header->cmd)
+    {
+        case CMD_LOGIN_RESULT:
+        {
+            recv(_cSock, szRecv + sizeof(DataHeader), header->dataLength - sizeof(DataHeader), 0);
+            LoginResult* loginResult = (LoginResult*)szRecv;
+            printf("Result CMD_LOGIN_RESULT received from server: %d, data length: %d. \n", 
+                loginResult->result, loginResult->dh.dataLength);
+            break;
+        }
+        case CMD_LOGOUT_RESULT:
+        {
+            recv(_cSock, szRecv + sizeof(DataHeader), header->dataLength - sizeof(DataHeader), 0);
+            LogoutResult* logoutResult = (LogoutResult*)szRecv;
+            printf("Result CMD_LOGOUT_RESULT received from server: %d, data length: %d \n", 
+                logoutResult->result, logoutResult->dh.dataLength);
+            break;
+        }
+        case CMD_NEW_USER_JOIN:
+        {
+            recv(_cSock, szRecv + sizeof(DataHeader), header->dataLength - sizeof(DataHeader), 0);
+            NewUserJoin* newUserJoin = (NewUserJoin*)szRecv;
+            printf("Result CMD_NEW_USER_JOIN received from server, <SOCKET = %d>, data length: %d \n",
+                newUserJoin->sock, newUserJoin->dh.dataLength);
+            break;
+        }
+        default:
+        {
+            DataHeader header;
+            header.cmd = CMD_ERROR;
+            header.dataLength = 0;
+            send(_cSock, (char*)&header, sizeof(DataHeader), 0);
+        }
+    }
+}
 
 int main()
 {
+    cJSON* t_jRoot = cJSON_FromFile("../../config/configClient.json"); // start cJson module
+
     int _cSock = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
     if(-1 == _cSock)
     {
@@ -19,8 +70,8 @@ int main()
     }
     struct sockaddr_in _sin = {};
     _sin.sin_family = AF_INET;
-    _sin.sin_port = htons(4599);
-    _sin.sin_addr.s_addr = inet_addr("127.0.0.1");
+    _sin.sin_port = htons(cJson_GetInt(t_jRoot, "port"));
+    _sin.sin_addr.s_addr = inet_addr(cJson_GetCharArr(t_jRoot, "ip"));
     int ret = connect(_cSock, (struct sockaddr*)&_sin, sizeof(struct sockaddr_in));
     if(-1 == ret)
     {
@@ -30,38 +81,33 @@ int main()
     {
         printf("establishing connection success, ret: %d.\n", ret);
     }
-    
+    int32_t t_timer = 0;
     while (1)
     {
-        /* code */
-        char cmdBuf[128] = {};
-        scanf("%s", cmdBuf);  
-        if(0 == strcmp(cmdBuf, "exit"))
+        fd_set fdRead;
+        FD_ZERO(&fdRead);
+        FD_SET(_cSock, &fdRead);
+        struct timeval t = {2, 0};
+        int ret = select(_cSock+1, &fdRead, 0, 0, &t);
+        if(ret < 0)
         {
+            printf("select task finished. \n");
             break;
         }
-        else if(0 == strcmp(cmdBuf, "login"))
+        if(FD_ISSET(_cSock, &fdRead))
         {
-            Login login;
-            initLogin(&login, "liyinzhe", "19940901");
-            write(_cSock, (const char*)&login, sizeof(login));
-            LoginResult loginResult;
-            read(_cSock, (char*)&loginResult, sizeof(LoginResult));
-            printf("Login result: %d. \n", loginResult.result);
+            FD_CLR(_cSock, &fdRead);
+            if(-1 == processor(_cSock))
+            {
+                printf("select task finished. \n");
+                break;
+            }
         }
-        else if(0 == strcmp(cmdBuf, "logout"))
-        {
-            Logout logout;
-            initLogout(&logout, "liyinzhe");
-            write(_cSock, (const char*)&logout, sizeof(logout));
-            LogoutResult logoutResult;
-            read(_cSock, (char*)&logoutResult, sizeof(LogoutResult));
-            printf("Logout result: %d. \n", logoutResult.result);
-        }
-        else
-        {
-            printf("Input error, please try again. \n");
-        }
+        printf("other tasks are processed during the free time. %d\n", ++t_timer);
+        Login login;
+        initLogin(&login, "leeeeein", "19940901");
+        send(_cSock, (const char*)&login, sizeof(Login), 0);
+        sleep(10);
     }
     
     close(_cSock);

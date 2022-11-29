@@ -2,6 +2,13 @@
 // Created by hujianzhe
 //
 
+// example:
+// DynArr_t(int) a;
+// dynarrInitZero_raw(&a.raw);
+// int ret;
+// dynarrInsert(&a, 0, 13, ret);
+// printf("this is a test line: %d \n", a.buf[0]);
+
 #ifndef UTIL_C_CRT_DYNARR_H
 #define	UTIL_C_CRT_DYNARR_H
 

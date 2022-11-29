@@ -13,6 +13,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define cJson_GetInt(root, nodeName) cJSON_GetInteger(cJSON_GetField(root, nodeName))
+#define cJson_GetCharArr(root, nodeName) cJSON_GetStringPtr(cJSON_GetField(root, nodeName))
+
 typedef enum cJSON_Type {
 	cJSON_Unknown,
 	cJSON_Value,

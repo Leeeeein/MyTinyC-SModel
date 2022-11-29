@@ -4,12 +4,12 @@
 #include <unistd.h>
 #include <string.h>
 #include <arpa/inet.h>
-#include "../components/header/utils/json.h"
+#include "../components/source/utils/json.c"
 
 int main()
 {
-    // cJSON* cjson = cJSON_FromFile("../config/configServer.json");
-    // printf("======== %s ===========\n", cjson->child->next->name);
+    cJSON* cjson = cJSON_FromFile("../config/configServer.json");
+    printf("======== %s ===========\n", cjson->child->next->name);
     int _sock = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 
     struct sockaddr_in _sin = {};

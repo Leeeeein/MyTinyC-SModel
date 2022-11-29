@@ -7,6 +7,7 @@ enum CMD
     CMD_LOGIN_RESULT,
     CMD_LOGOUT,
     CMD_LOGOUT_RESULT,
+    CMD_NEW_USER_JOIN,
     CMD_ERROR
 };
 
@@ -64,4 +65,17 @@ void initLogoutResult(LogoutResult* logoutResult)
     logoutResult->dh.dataLength = sizeof(LogoutResult);
     logoutResult->dh.cmd = CMD_LOGOUT_RESULT;
     logoutResult->result = 0;
+}
+
+typedef struct
+{
+    DataHeader dh;
+    int result;
+    int sock;
+}NewUserJoin;
+void initNewUserJoin(NewUserJoin* newUserJoin)
+{
+    newUserJoin->dh.dataLength = sizeof(NewUserJoin);
+    newUserJoin->dh.cmd = CMD_NEW_USER_JOIN;
+    newUserJoin->sock = 0;
 }
