@@ -80,7 +80,7 @@ int logModuleInit()
     return 0;
 }
 
-int main():
+int main()
 {
     printf("main entry ready.\n");
     cfgModuleInit();
