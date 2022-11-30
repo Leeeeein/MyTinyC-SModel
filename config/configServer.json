@@ -1,5 +1,8 @@
 {
     "ip":"127.0.0.1",
     "port":4599,
-    "max_listen_num":5
+    "max_listen_num":5,
+    "log_path": "/home/liyinzhe/Workspace/MyTinyC-SModel/src/Server/",
+    "max_log_length": 10
+
 }

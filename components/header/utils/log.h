@@ -1,9 +1,13 @@
 //
 // Created by hujianzhe
 //
-
+#pragma once
 #ifndef	UTIL_C_COMPONENT_LOG_H
 #define	UTIL_C_COMPONENT_LOG_H
+
+#include <time.h>
+#include <bits/time.h>
+#include <sys/time.h>
 
 #include "../datastructs/list.h"
 #include "../sysapi/ipc.h"

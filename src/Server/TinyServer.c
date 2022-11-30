@@ -1,5 +1,6 @@
 #include <sys/time.h>
 #include <bits/time.h>
+#include <time.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <stdio.h>
@@ -7,11 +8,6 @@
 #include <string.h>
 #include <arpa/inet.h>
 #include "../defs.h"
-#include "../../components/source/sysapi/ipc.c"
-#include "../../components/source/utils/log.c"
-#include "../../components/source/utils/json.c"
-#include "../../components/source/utils/dynarr.c"
-
 
 DynArr_t(SOCKET) g_clients; // a global container for clients' sockets.
 
@@ -60,17 +56,43 @@ int processor(SOCKET _cSock)
     }
 }
 
-int main()
+static Log_t s_Log;
+static cJSON* s_jRoot;
+int cfgModuleInit()
 {
-    cJSON* t_jRoot = cJSON_FromFile("../../config/configServer.json"); // start cJson module
-    // Log_t t_Log;
-    // logInit(&t_Log, "", "/home/liyinzhe/Workspace/MyTinyC-SModel/src/Client");
+    s_jRoot = cJSON_FromFile("../../config/configServer.json"); // start cJson module
+    return 0;
+}
+
+int logModuleInit()
+{
+    time_t tt = time(0);
+    char s[32];
+    strftime(s, sizeof(s), "%Y%m%d%H%M%S", localtime(&tt));
+    char* path = cJson_GetCharArr(s_jRoot, "log_path");
+    strcat(path, s);
+    if (!logInit(&s_Log, "", path)) {
+        printf("log initialize failed. \n");
+		return -1;
+	}
+    s_Log.m_maxfilesize = 1;//cJson_GetInt(s_jRoot, "max_log_length");
+    logInfo(&s_Log, "log file is initialized. \n");
+    return 0;
+}
+
+int main():
+{
+    printf("main entry ready.\n");
+    cfgModuleInit();
+    logModuleInit();
+    Log_t t_Log, *t2;
+    
     dynarrInitZero(&g_clients); // initializing the container of clients
 
     SOCKET _sock = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP); // create a server socket
     struct sockaddr_in _sin = {};
     _sin.sin_family = AF_INET;
-    _sin.sin_port = htons(cJson_GetInt(t_jRoot, "port"));
+    _sin.sin_port = htons(cJson_GetInt(s_jRoot, "port"));
     _sin.sin_addr.s_addr = htonl(INADDR_ANY);
 
     int opt = 1;
@@ -85,7 +107,7 @@ int main()
         printf("bind success.\n");
     }
 
-    int ret = listen(_sock, cJson_GetInt(t_jRoot, "max_listen_num")); // set this process as a server process
+    int ret = listen(_sock, cJson_GetInt(s_jRoot, "max_listen_num")); // set this process as a server process
     if(-1 == ret)
     {
         printf("listen failed.\n");

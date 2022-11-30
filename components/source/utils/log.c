@@ -4,8 +4,8 @@
 
 #include "../../header/sysapi/error.h"
 #include "../../header/sysapi/file.h"
-#include "../../header/sysapi/time.h"
-#include "../../header/utils/string.h"
+#include "../../header/sysapi/ctime.h"
+#include "../../header/utils/cstring.h"
 #include "../../header/utils/log.h"
 #include <stdarg.h>
 #include <stdio.h>

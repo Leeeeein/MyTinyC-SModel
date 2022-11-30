@@ -2,7 +2,7 @@
 // Created by hujianzhe
 //
 
-#include "../../header/sysapi/time.h"
+#include "../../header/sysapi/ctime.h"
 #include <errno.h>
 #include <stdlib.h>
 #include <string.h>
@@ -28,6 +28,11 @@ int gmtimeTimezoneOffsetSecond(void) {
 			return -1;
 		tm_gmtoff = tz.Bias * 60;
 #else
+		struct timezone 
+		{
+		int tz_minuteswest;     /* (minutes west of Greenwich)，按我的理解，此数据项的含义是当地时间以格林威治时间为基准向西算的分钟数。 */
+		int tz_dsttime;         /* (type of DST correction)，按字面理解是日光节约时间的修正方式 */
+		};
 		struct timeval tv;
 		struct timezone tz;
 		if (gettimeofday(&tv, &tz))
@@ -38,12 +43,12 @@ int gmtimeTimezoneOffsetSecond(void) {
 	return tm_gmtoff;
 }
 
-time_t gmtimeSecond(void) {
-	time_t v;
+long int gmtimeSecond(void) {
+	long int v;
 	return time(&v);
 }
 
-time_t localtimeSecond(void) {
+long int localtimeSecond(void) {
 	return gmtimeSecond() - gmtimeTimezoneOffsetSecond();
 }
 
@@ -65,7 +70,7 @@ long long gmtimeMillisecond(void) {
 #endif
 }
 
-struct tm* gmtimeTM(time_t value, struct tm* datetime) {
+struct tm* gmtimeTM(long int value, struct tm* datetime) {
 #if defined(WIN32) || defined(_WIN64)
 	int res = gmtime_s(datetime, &value);
 	if (res) {
@@ -79,7 +84,7 @@ struct tm* gmtimeTM(time_t value, struct tm* datetime) {
 	return datetime;
 }
 
-struct tm* gmtimeLocalTM(time_t value, struct tm* datetime) {
+struct tm* gmtimeLocalTM(long int value, struct tm* datetime) {
 #if defined(WIN32) || defined(_WIN64)
 	int res = localtime_s(datetime, &value);
 	if (res) {
