@@ -403,7 +403,7 @@ double cJSON_GetDouble(cJSON* node) {
 	return v;
 }
 
-const char* cJSON_GetStringPtr(cJSON* node) {
+char* cJSON_GetStringPtr(cJSON* node) {
 	if (!node) {
 		return NULL;
 	}

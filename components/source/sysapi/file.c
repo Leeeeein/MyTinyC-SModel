@@ -265,7 +265,7 @@ int fdWrite(FD_t fd, const void* buf, unsigned int nbytes) {
 long long fdSeek(FD_t fd, long long offset, int whence) {
 #if defined(_WIN32) || defined(_WIN64)
 	LARGE_INTEGER pos = {0};
-	LARGE_INTEGER off = {0};
+	LARGE_I+NTEGER off = {0};
 	off.QuadPart = offset;
 	if (!SetFilePointerEx((HANDLE)fd, off, &pos, whence)) {
 		pos.QuadPart = -1;

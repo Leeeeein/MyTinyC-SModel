@@ -157,6 +157,7 @@ static void log_build(Log_t* log, const char* priority, const char* format, va_l
 	cache->txt[len - 1] = '\n';
 	cache->txt[len] = 0;
 	cache->len = len;
+	printf("%s", cache->txt);
 	log_write(log, cache);
 }
 

@@ -178,7 +178,7 @@ long long clockNanosecond(void) {
 	return (double)counter.QuadPart / s_frep.QuadPart * 1000000000;
 #elif __linux__
 	struct timespec ts;
-	if (clock_gettime(CLOCK_MONOTONIC, &ts) < 0)
+	if (clock_gettime(1, &ts) < 0)
 		return -1;
 	return ts.tv_sec * 1000000000LL + ts.tv_nsec;
 #elif __FreeBSD__
