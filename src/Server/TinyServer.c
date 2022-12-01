@@ -108,6 +108,7 @@ int main()
                 maxSock = g_clients.buf[n];
             }
         }
+        
 
         struct timeval t = {1, 0}; // specify a timeout period
         int ret = select(maxSock+1, &fdRead, &fdWrite, &fdExp, &t);
