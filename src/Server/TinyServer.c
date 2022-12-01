@@ -1,13 +1,5 @@
-#include <sys/time.h>
-#include <bits/time.h>
-#include <time.h>
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <stdio.h>
-#include <unistd.h>
-#include <string.h>
-#include <arpa/inet.h>
-#include "../defs.h"
+#include "../Common/defs.h"
+#include "ModuleManager.c"
 
 DynArr_t(SOCKET) g_clients; // a global container for clients' sockets.
 
@@ -56,37 +48,11 @@ int processor(SOCKET _cSock)
     }
 }
 
-static Log_t s_Log;
-static cJSON* s_jRoot;
-int cfgModuleInit()
-{
-    s_jRoot = cJSON_FromFile("../../config/configServer.json"); // start cJson module
-    return 0;
-}
-
-int logModuleInit()
-{
-    time_t tt = time(0);
-    char s[32];
-    strftime(s, sizeof(s), "%Y%m%d%H%M%S", localtime(&tt));
-    char* path = cJson_GetCharArr(s_jRoot, "log_path");
-    strcat(path, s);
-    if (!logInit(&s_Log, "", path)) {
-        printf("log initialize failed. \n");
-		return -1;
-	}
-    s_Log.m_maxfilesize = 1;//cJson_GetInt(s_jRoot, "max_log_length");
-    logInfo(&s_Log, "log file is initialized. \n");
-    return 0;
-}
-
 int main()
 {
-    printf("main entry ready.\n");
     cfgModuleInit();
     logModuleInit();
-    Log_t t_Log, *t2;
-    
+    LogInfo("Server is launching...");
     dynarrInitZero(&g_clients); // initializing the container of clients
 
     SOCKET _sock = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP); // create a server socket
@@ -100,21 +66,21 @@ int main()
                     
     if(-1 == bind(_sock, (struct sockaddr*)&_sin, sizeof(_sin))) // bind socket with network address
     {
-        printf("bind failed.\n");
+        LogErr("Bind failed.");
     }
     else
     {
-        printf("bind success.\n");
+        LogInfo("Bind succeeded.");
     }
 
     int ret = listen(_sock, cJson_GetInt(s_jRoot, "max_listen_num")); // set this process as a server process
     if(-1 == ret)
     {
-        printf("listen failed.\n");
+        LogErr("Listen failed.");
     }
     else
     {
-        printf("listen success.\n");
+        LogInfo("Listen success.");
     }
 
     int _cSock = -1; // declare a socket name to refer to a client.
@@ -143,11 +109,11 @@ int main()
             }
         }
 
-        struct timeval t = {2, 0}; // specify a timeout period
+        struct timeval t = {1, 0}; // specify a timeout period
         int ret = select(maxSock+1, &fdRead, &fdWrite, &fdExp, &t);
         if(ret < 0)
         {
-            printf("select task ends. \n");
+            LogErr("select task ends.");
             break;
         }
 
@@ -160,7 +126,7 @@ int main()
             _cSock = accept(_sock, (struct sockaddr*)&clientAddr, (socklen_t*)&nAddrLen); // fetch the first client from server's queue and design this name to it
             if(-1 == _cSock)
             {
-                printf("receive invalid client. \n");
+                LogErr("receive invalid client.");
             }
             else
             {
@@ -172,7 +138,7 @@ int main()
                 }
                 int appendRet = 0;
                 dynarrInsert(&g_clients, g_clients.len, _cSock, appendRet);
-                printf("found a new client, ip: %s\n", inet_ntoa(clientAddr.sin_addr));
+                LogInfo("found a new client, ip: %s\n", inet_ntoa(clientAddr.sin_addr));
             }
         }
 #pragma region FILTER_EXITED_CLIENTS_ID
@@ -187,7 +153,7 @@ int main()
         {
             if(FD_ISSET(g_clients.buf[n], &fdRead))
             {
-                printf("a client is processing. \n");
+                LogInfo("A client is processing.");
                 if(-1 == processor(g_clients.buf[n]))
                 {
                     dynarrInsert(&t_idxToRm, t_idxToRm.len, n, t_ret);
@@ -207,13 +173,13 @@ int main()
 #pragma endregion FILTER_EXITED_CLIENTS_ID
 
 
-        printf("other tasks are processed during the free time. \n");
+        // LogInfo("Other tasks are processed during the free time.");
     }
     for(int n = g_clients.len-1; n >= 0; n--)
     {
         close(g_clients.buf[n]); // close all clients' sockets
     }
     close(_sock); // close local socket
-    printf("server exited. \n");
+    LogInfo("server exited.");
     return 0;
 }

@@ -12,15 +12,15 @@
 #include <sys/socket.h>
 #include <sys/select.h>
 
-#include "../components/source/utils/json.c"
-#include "../components/source/utils/dynarr.c"
-#include "../components/source/sysapi/file.c"
-#include "../components/source/sysapi/ipc.c"
-#include "../components/source/sysapi/error.c"
-#include "../components/source/utils/log.c"
-#include "../components/source/utils/cstring.c"
-#include "../components/source/datastructs/list.c"
-#include "../components/source/sysapi/ctime.c"
+#include "../../components/source/utils/json.c"
+#include "../../components/source/utils/dynarr.c"
+#include "../../components/source/sysapi/file.c"
+#include "../../components/source/sysapi/ipc.c"
+#include "../../components/source/sysapi/error.c"
+#include "../../components/source/utils/log.c"
+#include "../../components/source/utils/cstring.c"
+#include "../../components/source/datastructs/list.c"
+#include "../../components/source/sysapi/ctime.c"
 
 static Log_t s_Log;
 static cJSON* s_jRoot;

@@ -1,13 +1,4 @@
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <sys/select.h>
-#include <bits/time.h>
-#include <stdio.h>
-#include <unistd.h>
-#include <string.h>
-#include <arpa/inet.h>
-#include "../defs.h"
-#include "../../components/source/utils/json.c"
+#include "../Common/defs.h"
 
 int processor(SOCKET _cSock)
 {
@@ -55,11 +46,40 @@ int processor(SOCKET _cSock)
     }
 }
 
+int g_bExit = 1;
+void* commMessThread(SOCKET* _cSock)
+{
+    char sendBuf[128];
+    while(1)
+    {
+        scanf("%s", sendBuf);
+        if(0 == strcmp(sendBuf, "login"))
+        {
+            Login login;
+            initLogin(&login, "leeeeein", "19940901");
+            send(*_cSock, (const char*)&login, sizeof(Login), 0);
+        }
+        else if(0 == strcmp(sendBuf, "logout"))
+        {
+            Logout logout;
+            initLogout(&logout, "liyinzhe");
+            send(*_cSock, (char*)&logout, sizeof(Logout), 0);
+        }
+        else if(0 == strcmp(sendBuf, "exit"))
+        {
+            g_bExit = 0;
+        }
+    }
+}
+
 int main()
 {
     cJSON* t_jRoot = cJSON_FromFile("../../config/configClient.json"); // start cJson module
-
     int _cSock = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+    pthread_t id;
+
+    pthread_create(&id, NULL, commMessThread, &_cSock);
+    pthread_detach(id);
     if(-1 == _cSock)
     {
         printf("creating socket failed.\n");
@@ -82,7 +102,7 @@ int main()
         printf("establishing connection success, ret: %d.\n", ret);
     }
     int32_t t_timer = 0;
-    while (1)
+    while (g_bExit)
     {
         fd_set fdRead;
         FD_ZERO(&fdRead);
@@ -103,13 +123,8 @@ int main()
                 break;
             }
         }
-        printf("other tasks are processed during the free time. %d\n", ++t_timer);
-        Login login;
-        initLogin(&login, "leeeeein", "19940901");
-        send(_cSock, (const char*)&login, sizeof(Login), 0);
-        sleep(10);
+        // printf("other tasks are processed during the free time. %d\n", ++t_timer);
     }
-    
     close(_cSock);
     printf("close socket.\n");
     return 0;
