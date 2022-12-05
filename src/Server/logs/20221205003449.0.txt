@@ -1,0 +1,22 @@
+|2022-12-5 0:34:49|INFO|Log file is initialized...
+|2022-12-5 0:34:49|INFO|Config module is launching...
+|2022-12-5 0:34:49|INFO|Bind succeeded.
+|2022-12-5 0:34:49|INFO|Listen success.
+|2022-12-5 0:34:49|INFO|Server is launching...
+|2022-12-5 0:34:54|INFO|found a new client, ip: 127.0.0.1
+|2022-12-5 0:34:57|INFO|Input paths of files to send, enter 'EOS' to end.
+|2022-12-5 0:35:1|DEBUG|read file succeeded.
+|2022-12-5 0:35:1|INFO|
+ slience slience
+this is
+bool scanFileAndSend(const char* path, FILE* fp, char* dataBuf, DynArr_t(SOCKET)* clients)
+{
+    fp = fopen(path, "rb");
+    if(fp == NULL)
+    {
+this is
+bool scanFileAndSend(const char* path, FILE* fp, char* dataBuf, DynArr_t(SOCKET)* clients)
+
+
+|2022-12-5 0:35:1|INFO|QAQAQAQAQAQAQAQAQAQ file length: 270
+|2022-12-5 0:35:1|INFO|Message is sent to a client: <Socket: 5>

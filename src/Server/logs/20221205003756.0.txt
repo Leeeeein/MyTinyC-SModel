@@ -1,0 +1,14 @@
+|2022-12-5 0:37:56|INFO|Log file is initialized...
+|2022-12-5 0:37:56|INFO|Config module is launching...
+|2022-12-5 0:37:56|INFO|Bind succeeded.
+|2022-12-5 0:37:56|INFO|Listen success.
+|2022-12-5 0:37:56|INFO|Server is launching...
+|2022-12-5 0:38:2|INFO|found a new client, ip: 127.0.0.1
+|2022-12-5 0:38:4|INFO|Input paths of files to send, enter 'EOS' to end.
+|2022-12-5 0:38:8|DEBUG|read file succeeded.
+|2022-12-5 0:38:8|INFO|QAQAQAQAQAQAQAQAQAQ file length: 249
+|2022-12-5 0:38:8|INFO|Message is sent to a client: <Socket: 5>
+|2022-12-5 0:38:41|INFO|Input paths of files to send, enter 'EOS' to end.
+|2022-12-5 0:38:52|DEBUG|read file succeeded.
+|2022-12-5 0:38:52|INFO|QAQAQAQAQAQAQAQAQAQ file length: 389
+|2022-12-5 0:38:52|INFO|Message is sent to a client: <Socket: 5>

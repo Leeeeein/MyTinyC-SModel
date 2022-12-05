@@ -1,0 +1,17 @@
+|2022-12-1 23:25:18|INFO|Log file is initialized...
+|2022-12-1 23:25:18|INFO|Config module is launching...
+|2022-12-1 23:25:18|INFO|Bind succeeded.
+|2022-12-1 23:25:18|INFO|Listen success.
+|2022-12-1 23:25:18|INFO|Server is launching...
+|2022-12-1 23:25:20|INFO|Input paths of files to send, enter 'EOS' to end.
+|2022-12-1 23:25:26|DEBUG|/home/liyinzhe/Workspace/MyTinyC-SModel/src/Client/a.txt
+|2022-12-1 23:25:26|DEBUG|read file succeeded.
+|2022-12-1 23:25:26|NOTICE|
+ slience slience
+this is
+
+|2022-12-1 23:27:44|INFO| 一一一一一一一一一一一一一一一一一一一一
+|2022-12-1 23:27:44|INFO||    A wrong command is entered.
+|2022-12-1 23:27:44|INFO||    Enter 'exit' for exiting.
+|2022-12-1 23:27:44|INFO||    Enter 'show' for showing all files in the specified path.
+|2022-12-1 23:27:44|INFO| 一一一一一一一一一一一一一一一一一一一一

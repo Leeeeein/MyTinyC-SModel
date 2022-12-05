@@ -1,0 +1,12 @@
+|2022-12-4 21:48:46|INFO|Log file is initialized...
+|2022-12-4 21:48:46|INFO|Config module is launching...
+|2022-12-4 21:48:46|INFO|Bind succeeded.
+|2022-12-4 21:48:46|INFO|Listen success.
+|2022-12-4 21:48:46|INFO|Server is launching...
+|2022-12-4 21:48:53|INFO|found a new client, ip: 127.0.0.1
+|2022-12-4 21:48:56|INFO|Input paths of files to send, enter 'EOS' to end.
+|2022-12-4 21:49:12|DEBUG|read file succeeded.
+|2022-12-4 21:49:12|INFO|
+ slience slience
+this is
+

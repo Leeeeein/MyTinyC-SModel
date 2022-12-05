@@ -35,7 +35,7 @@ int gmtimeTimezoneOffsetSecond(void) {
 		};
 		struct timeval tv;
 		struct timezone tz;
-		if (gettimeofday(&tv, &tz))
+		if (gettimeofday(&tv, (void*)&tz))
 			return -1;
 		tm_gmtoff = tz.tz_minuteswest * 60;
 #endif

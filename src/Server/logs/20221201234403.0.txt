@@ -1,0 +1,11 @@
+|2022-12-1 23:44:3|INFO|Log file is initialized...
+|2022-12-1 23:44:3|INFO|Config module is launching...
+|2022-12-1 23:44:3|INFO|Bind succeeded.
+|2022-12-1 23:44:3|INFO|Listen success.
+|2022-12-1 23:44:3|INFO|Server is launching...
+|2022-12-1 23:44:9|INFO|Input paths of files to send, enter 'EOS' to end.
+|2022-12-1 23:44:11|INFO| 一一一一一一一一一一一一一一一一一一一一
+|2022-12-1 23:44:11|INFO||    A wrong command is entered.
+|2022-12-1 23:44:11|INFO||    Enter 'exit' for exiting.
+|2022-12-1 23:44:11|INFO||    Enter 'show' for showing all files in the specified path.
+|2022-12-1 23:44:11|INFO| 一一一一一一一一一一一一一一一一一一一一

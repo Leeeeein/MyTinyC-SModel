@@ -1,0 +1,13 @@
+|2022-12-2 0:40:8|INFO|Log file is initialized...
+|2022-12-2 0:40:8|INFO|Config module is launching...
+|2022-12-2 0:40:8|INFO|Bind succeeded.
+|2022-12-2 0:40:8|INFO|Listen success.
+|2022-12-2 0:40:8|INFO|Server is launching...
+|2022-12-2 0:40:10|INFO|found a new client, ip: 127.0.0.1
+|2022-12-2 0:40:15|INFO|Input paths of files to send, enter 'EOS' to end.
+|2022-12-2 0:41:17|INFO|A client is processing. 1
+|2022-12-2 0:41:17|INFO|Command received from <socket = 5>: login. username: leeeeein, password: 19940901.
+|2022-12-2 0:41:17|INFO|8 bytes was written.
+|2022-12-2 0:41:43|INFO|A client is processing. 1
+|2022-12-2 0:41:43|INFO|Command received from <socket = 5>: login. username: leeeeein, password: 19940901.
+|2022-12-2 0:41:43|INFO|8 bytes was written.

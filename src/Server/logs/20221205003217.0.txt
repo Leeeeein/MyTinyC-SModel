@@ -1,0 +1,55 @@
+|2022-12-5 0:32:17|INFO|Log file is initialized...
+|2022-12-5 0:32:17|INFO|Config module is launching...
+|2022-12-5 0:32:17|INFO|Bind succeeded.
+|2022-12-5 0:32:17|INFO|Listen success.
+|2022-12-5 0:32:17|INFO|Server is launching...
+|2022-12-5 0:32:21|INFO|found a new client, ip: 127.0.0.1
+|2022-12-5 0:32:24|INFO|Input paths of files to send, enter 'EOS' to end.
+|2022-12-5 0:32:51|DEBUG|read file succeeded.
+|2022-12-5 0:32:51|INFO|
+ slience slience
+this is
+bool scanFileAndSend(const char* path, FILE* fp, char* dataBuf, DynArr_t(SOCKET)* clients)
+{
+    fp = fopen(path, "rb");
+    if(fp == NULL)
+    {
+        LogErr("read file failed.");
+        return false;
+    }
+    else
+    {
+        LogDebug("read file succeeded.");
+    }
+    fseek(fp, 0, SEEK_END);
+    int length = ftell(fp);
+    dataBuf = (char *)malloc((length + 1) * sizeof(char));
+    rewind(fp);
+    length = fread(dataBuf, 1, length, fp);
+    dataBuf[length] = '\0';
+    fclose(fp);
+    LogInfo("\n %s", dataBuf);
+
+    CommonMessage cmf;
+    initCommonMessage(&cmf);
+    strcpy(cmf.content, (const char*)dataBuf);
+
+    for(SOCKET s = 0; s < clients->len; s++)
+    {
+        LogInfo("Message is sent to a client: <Socket: %d>", clients->buf[s]);
+        send(clients->buf[s], (char*)&cmf, sizeof(CommonMessage), 0);
+    }
+    return true;
+}
+
+void scanFilesAndSend(DynArr_t(char*)* sof, FILE* fp, char* dataBuf, DynArr_t(SOCKET)* clients)
+{
+    for(int i = 0; i < sof->len; i++)
+    {
+        bool ret = scanFileAndSend(sof->buf[i], fp, dataBuf, (DynArr_t(SOCKET)*)clients);
+    }
+    dynarrFreeMemory(sof);
+}
+
+|2022-12-5 0:32:51|INFO|QAQAQAQAQAQAQAQAQAQ file length: 1142
+|2022-12-5 0:32:51|INFO|Message is sent to a client: <Socket: 5>

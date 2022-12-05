@@ -1,0 +1,18 @@
+|2022-12-4 21:40:10|INFO|Log file is initialized...
+|2022-12-4 21:40:10|INFO|Config module is launching...
+|2022-12-4 21:40:10|INFO|Bind succeeded.
+|2022-12-4 21:40:10|INFO|Listen success.
+|2022-12-4 21:40:10|INFO|Server is launching...
+|2022-12-4 21:40:20|INFO|found a new client, ip: 127.0.0.1
+|2022-12-4 21:40:24|INFO|Input paths of files to send, enter 'EOS' to end.
+|2022-12-4 21:40:39|DEBUG|read file succeeded.
+|2022-12-4 21:40:39|INFO|
+ slience slience
+this is
+
+|2022-12-4 21:41:45|DEBUG|read file succeeded.
+|2022-12-4 21:41:49|INFO|
+ slience slience
+this is
+
+|2022-12-4 21:41:53|INFO|= = =  Message is sent to a client: <Socket: 6351648>

@@ -1,8 +1,8 @@
-#include "../Common/defs.h"
+#include "ClientDefs.h"
 
 int processor(SOCKET _cSock)
 {
-    char szRecv[1024] = {};
+    char szRecv[16392] = {};
     int nLen = recv(_cSock, (char*)szRecv, sizeof(DataHeader), 0);
     DataHeader* header = (DataHeader*)szRecv;
     if(nLen <= 0)
@@ -34,6 +34,29 @@ int processor(SOCKET _cSock)
             NewUserJoin* newUserJoin = (NewUserJoin*)szRecv;
             printf("Result CMD_NEW_USER_JOIN received from server, <SOCKET = %d>, data length: %d \n",
                 newUserJoin->sock, newUserJoin->dh.dataLength);
+            break;
+        }
+        case CMD_COMMON_FILE:
+        {
+            break;
+        }
+        case CMD_COMMON_MESSAGE:
+        {
+            recv(_cSock, szRecv + sizeof(DataHeader), header->dataLength - sizeof(DataHeader), 0);
+            CommonMessage* commonMessage = (CommonMessage*)szRecv;
+            printf("Result CMD_COMMON_MESSAGE received from server. \n");
+            printf("%s", commonMessage->content);
+            
+            FILE* fp = fopen("/home/liyinzhe/Workspace/MyTinyC-SModel/src/Client/b.txt","w");
+            for(int i = 0; i < strlen(commonMessage->content)-1; i++)
+            {
+                fprintf(fp, "%c", commonMessage->content[i]);
+            }
+            // for(int i = 0; i < 100; i++)
+            // {
+            //     fprintf(fp, "%s", "a");
+            // }
+            fclose(fp);
             break;
         }
         default:

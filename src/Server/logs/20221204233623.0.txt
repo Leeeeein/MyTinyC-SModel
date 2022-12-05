@@ -1,0 +1,20 @@
+|2022-12-4 23:36:23|INFO|Log file is initialized...
+|2022-12-4 23:36:23|INFO|Config module is launching...
+|2022-12-4 23:36:23|INFO|Bind succeeded.
+|2022-12-4 23:36:23|INFO|Listen success.
+|2022-12-4 23:36:23|INFO|Server is launching...
+|2022-12-4 23:36:28|INFO|found a new client, ip: 127.0.0.1
+|2022-12-4 23:36:33|INFO|Input paths of files to send, enter 'EOS' to end.
+|2022-12-4 23:36:39|DEBUG|read file succeeded.
+|2022-12-4 23:36:39|INFO|
+ slience slience
+this is
+
+|2022-12-4 23:36:39|INFO|= = =  Message is sent to a client: <Socket: 5>
+|2022-12-4 23:36:48|INFO|Input paths of files to send, enter 'EOS' to end.
+|2022-12-4 23:36:55|DEBUG|read file succeeded.
+|2022-12-4 23:36:55|INFO|
+ slience slience
+this is
+
+|2022-12-4 23:36:55|INFO|= = =  Message is sent to a client: <Socket: 5>

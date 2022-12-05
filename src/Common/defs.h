@@ -5,6 +5,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <pthread.h>
+#include <stdbool.h>
 #include <sys/time.h>
 #include <sys/types.h>
 #include <arpa/inet.h>
@@ -24,10 +25,10 @@
 
 static Log_t s_Log;
 static cJSON* s_jRoot;
-#define LogErr(str, ...) logErr(&s_Log, str,  ##__VA_ARGS__);
-#define LogWarn(str, ...) logWarning(&s_Log, str,  ##__VA_ARGS__);
-#define LogInfo(str, ...) logInfo(&s_Log, str,  ##__VA_ARGS__);
-#define LogDebug(str, ...) logDebug(&s_Log, str,  ##__VA_ARGS__);
+#define LogErr(str, ...)    logErr(&s_Log, str,  ##__VA_ARGS__);
+#define LogWarn(str, ...)   logWarning(&s_Log, str,  ##__VA_ARGS__);
+#define LogInfo(str, ...)   logInfo(&s_Log, str,  ##__VA_ARGS__);
+#define LogDebug(str, ...)  logDebug(&s_Log, str,  ##__VA_ARGS__);
 #define LogNotice(str, ...) logNotice(&s_Log, str,  ##__VA_ARGS__);
 
 #define SOCKET int64_t
@@ -38,7 +39,9 @@ enum CMD
     CMD_LOGOUT,
     CMD_LOGOUT_RESULT,
     CMD_NEW_USER_JOIN,
-    CMD_ERROR
+    CMD_ERROR,
+    CMD_COMMON_MESSAGE,
+    CMD_COMMON_FILE,
 };
 
 typedef struct
@@ -114,11 +117,23 @@ typedef struct
 {
     DataHeader dh;
     int result;
-    char content[256];
+    char content[8196];
 }CommonMessage;
 void initCommonMessage(CommonMessage* commMess)
 {
     commMess->dh.dataLength = sizeof(CommonMessage);
-    commMess->dh.cmd = CMD_LOGOUT;
+    commMess->dh.cmd = CMD_COMMON_MESSAGE;
     commMess->result = 1;
+}
+
+typedef struct
+{
+    DataHeader dh;
+    char content[2048];
+}CommonFile;
+void initCommonFile(CommonFile* commFile, int len, const char* src)
+{
+    strcpy(commFile->content, src);
+    commFile->dh.dataLength = sizeof(CommonFile);
+    commFile->dh.cmd = CMD_COMMON_FILE;
 }

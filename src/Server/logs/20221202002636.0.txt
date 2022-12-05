@@ -1,0 +1,14 @@
+|2022-12-2 0:26:36|INFO|Log file is initialized...
+|2022-12-2 0:26:36|INFO|Config module is launching...
+|2022-12-2 0:26:36|INFO|Bind succeeded.
+|2022-12-2 0:26:36|INFO|Listen success.
+|2022-12-2 0:26:36|INFO|Server is launching...
+|2022-12-2 0:26:39|INFO|found a new client, ip: 127.0.0.1
+|2022-12-2 0:26:43|INFO|Input paths of files to send, enter 'EOS' to end.
+|2022-12-2 0:27:9|DEBUG|/home/liyinzhe/Workspace/MyTinyC-SModel/src/Client/a.txt
+|2022-12-2 0:27:9|DEBUG|read file succeeded.
+|2022-12-2 0:27:9|INFO|
+ slience slience
+this is
+
+|2022-12-2 0:27:9|INFO|Message is sent to a client: <Socket: 5>

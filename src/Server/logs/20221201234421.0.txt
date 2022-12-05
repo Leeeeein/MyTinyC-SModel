@@ -1,0 +1,15 @@
+|2022-12-1 23:44:21|INFO|Log file is initialized...
+|2022-12-1 23:44:21|INFO|Config module is launching...
+|2022-12-1 23:44:21|INFO|Bind succeeded.
+|2022-12-1 23:44:21|INFO|Listen success.
+|2022-12-1 23:44:21|INFO|Server is launching...
+|2022-12-1 23:44:32|INFO|Input paths of files to send, enter 'EOS' to end.
+|2022-12-1 23:44:38|DEBUG|/home/liyinzhe/Workspace/MyTinyC-SModel/src/Client/a.txt
+|2022-12-1 23:44:38|DEBUG|read file succeeded.
+|2022-12-1 23:44:38|INFO|
+ slience slience
+this is
+
+|2022-12-1 23:44:38|INFO|========== slience slience
+this is
+ == 2052 ==
