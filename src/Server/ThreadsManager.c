@@ -20,17 +20,17 @@ void* cmdRecvThread(DynArr_t(SOCKET)* clientsPtr)
     while(1)
     {   
         scanf("%s", sendBuf);
-        if(0 == strcmp(sendBuf, "exit"))
+        if(0 == strcmp(sendBuf, "E"))
             s_exitFlag = true;
-        else if(0 == strcmp(sendBuf, "show"))
+        else if(0 == strcmp(sendBuf, "L"))
         {
             showTerminalPath(path);
         }
-        else if(0 == strcmp(sendBuf, "select"))
+        else if(0 == strcmp(sendBuf, "C"))
         {
             selcFileToSend(path, &setOfFileAndDir, ret);
         }
-        else if(0 == strcmp(sendBuf, "send"))
+        else if(0 == strcmp(sendBuf, "S"))
         {
             scanFilesAndSend(&setOfFileAndDir, fp, data, clientsPtr);
         }
@@ -38,7 +38,7 @@ void* cmdRecvThread(DynArr_t(SOCKET)* clientsPtr)
         {   LogInfo(" 一一一一一一一一一一一一一一一一一一一一");
             LogInfo("|    A wrong command is entered.");
             LogInfo("|    Enter 'exit' for exiting.");
-            LogInfo("|    Enter 'show' for showing all files in the specified path.");
+            LogInfo("|    Enter 'L' for showing all files in the specified path.");
             LogInfo(" 一一一一一一一一一一一一一一一一一一一一");
         }
     }

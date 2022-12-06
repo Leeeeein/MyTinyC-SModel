@@ -124,14 +124,14 @@ bool scanFileAndSend(const char* path, FILE* fp, char* dataBuf, DynArr_t(SOCKET)
     fclose(fp);
     // LogInfo("\n %s", dataBuf);
     LogInfo("QAQAQAQAQAQAQAQAQAQ file length: %d", length);
-    CommonMessage cmf;
+    CommonMessage cmf; 
     initCommonMessage(&cmf);
-    strcpy(cmf.content, (const char*)dataBuf);
+    //strcpy(cmf.content, (const char*)dataBuf);
 
     for(SOCKET s = 0; s < clients->len; s++)
     {
         LogInfo("Message is sent to a client: <Socket: %d>", clients->buf[s]);
-        send(clients->buf[s], (char*)&cmf, sizeof(CommonMessage), 0);
+        // send(clients->buf[s], (char*)&cmf, sizeof(CommonMessage), 0);
     }
     return true;
 }
